@@ -7,13 +7,12 @@ jobs:
     report-pr-age:
         name: Report stuff about PR
         runs-on: ubuntu-20.04
-        if: github.event.pull_request.merged == true
         steps:
             - name: get PR age
-            run: |
-            echo "${{github.event}}"
-            pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
-            echo pr_age=$pr_age >> $GITHUB_ENV
+                run: |
+                    echo "${{github.event}}"
+                    pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
+                    echo pr_age=$pr_age >> $GITHUB_ENV
             - name: capture PR age to PostHog
             uses: PostHog/posthog-github-action@v0.1
             with:
