@@ -10,7 +10,7 @@ jobs:
         steps:
         - name: get PR age
           run: |
-            echo ${{github.event}} | python -m json.tool
+            echo github.event | python -m json.tool
             pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
             echo pr_age=$pr_age >> $GITHUB_ENV
         - name: capture PR age to PostHog
