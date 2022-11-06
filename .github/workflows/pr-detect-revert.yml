@@ -14,7 +14,7 @@ jobs:
             echo pr_age=$pr_age >> $GITHUB_ENV
             first_commit_message_in_pr=$(curl -s "${{github.event.pull_request._links.commits.href}}" | jq '.[0].commit.message')
             echo first_commit_message_in_pr=$first_commit_message_in_pr >> $GITHUB_ENV
-            if echo $first_commit_message_in_pr | grep -Eiq "^revert "; then
+            if echo $first_commit_message_in_pr | grep -E "^Revert "; then
                 echo is_revert=true >> $GITHUB_ENV
             else
                 echo is_revert=false >> $GITHUB_ENV
