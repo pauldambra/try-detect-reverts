@@ -5,7 +5,7 @@ on:
 
 jobs:
     report-pr-age:
-        name: Report age of PR
+        name: Report stuff about PR
         runs-on: ubuntu-20.04
         if: github.event.pull_request.merged == true
         steps:
