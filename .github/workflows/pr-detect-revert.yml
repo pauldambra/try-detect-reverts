@@ -13,8 +13,7 @@ jobs:
             pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
             echo pr_age=$pr_age >> $GITHUB_ENV
             first_commit_mesage=$(curl -s "${{github.event.pull_request._links.commits.href}}" | jq '.[0].commit.message')
-            echo first_commit_mesage=$first_commit_mesage >> $GITHUB_ENV
-            if echo "${{github.event.pull_request.title}}" | grep -Eiq "^reverts?"; then
+            if first_commit_mesage | grep -Eiq "^reverts?"; then
                 echo is_revert=true >> $GITHUB_ENV
             else
                 echo is_revert=false >> $GITHUB_ENV
