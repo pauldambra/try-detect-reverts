@@ -8,6 +8,8 @@ jobs:
         name: Report stuff about PR
         runs-on: ubuntu-20.04
         steps:
+        - name: debug out
+        - uses: hmarr/debug-action@v2
         - name: get PR age
           run: |
             echo github.event | python -m json.tool
