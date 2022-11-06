@@ -12,7 +12,7 @@ jobs:
           run: |
             pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
             echo pr_age=$pr_age >> $GITHUB_ENV
-            if echo "${{github.event.pull_request.title}}" | grep -Eiq "reverts?"; then
+            if echo "${{github.event.pull_request.title}}" | grep -Eiq "^reverts?"; then
                 echo is_revert=true >> $GITHUB_ENV
             else
                 echo is_revert=false >> $GITHUB_ENV
