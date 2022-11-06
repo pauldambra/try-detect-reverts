@@ -8,15 +8,20 @@ jobs:
         name: Report stuff about PR
         runs-on: ubuntu-20.04
         steps:
-        - name: debug out
-          uses: hmarr/debug-action@v2
         - name: get PR age
           run: |
             pr_age=$((($(date '+%s') - $(date -d "${{ github.event.pull_request.created_at }}" '+%s'))))
             echo pr_age=$pr_age >> $GITHUB_ENV
+            if echo "${{gitbu.event.pull_request.title}}" | grep -iq "reverts"; then
+                echo is_revert=true >> $GITHUB_ENV
+            else
+                echo is_revert=false >> $GITHUB_ENV
+            fi
+        - name: debug out
+          uses: hmarr/debug-action@v2
         - name: capture PR age to PostHog
           uses: PostHog/posthog-github-action@v0.1
           with:
             posthog-token: ${{secrets.POSTHOG_API_TOKEN}}
             event: 'posthog-ci-pr-age-when-closed'
-            properties: '{"prAgeInSeconds": ${{ env.pr_age }}}'
+            properties: '{"prAgeInSeconds": ${{ env.pr_age }}, "isRevert": ${{env.is_revert}} }'
